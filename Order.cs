@@ -133,7 +133,7 @@ namespace biiuse
                 this.cancelPrice = cancelPrice;
                 this.orderType = orderType;
                 this.state = new Pending(this, mql4);
-                Trade.addLogEntry(true, "Order successfully placed",
+                Trade.addLogEntry(1, "Order successfully placed",
                                         "Order ticket: ", ticket, "\n",
                                         "Order type: ", orderTypeStr, "\n",
                                         "Entry price: ", entryPrice.ToString("F5"), "\n",
@@ -144,7 +144,7 @@ namespace biiuse
                                         );
             } else
             {
-                Trade.addLogEntry(true, "Alert: Order could not be placed - Check Log for details");
+                Trade.addLogEntry(1, "Alert: Order could not be placed - Check Log for details");
             }
             return result;
         }
@@ -163,10 +163,10 @@ namespace biiuse
             bool success = mql4.OrderDelete(OrderTicket, System.Drawing.Color.Red);
             if (success)
             {
-                Trade.addLogEntry(true, "Order (" + OrderTicket +") successfully deleted");
+                Trade.addLogEntry(1, "Order (" + OrderTicket +") successfully deleted");
             } else
             {
-                Trade.addLogEntry(true, "Alert!: Order (" + OrderTicket + ") could not deleted - check log for details");
+                Trade.addLogEntry(1, "Alert!: Order (" + OrderTicket + ") could not deleted - check log for details");
             }
 
 
@@ -212,13 +212,13 @@ namespace biiuse
                 this.entryPrice = newOpenPrice;
                 this.stopLoss = newStopLoss;
                 this.takeProfit = newTakeProfit;
-                Trade.addLogEntry(true, "Order successfully modified", 
+                Trade.addLogEntry(1, "Order successfully modified", 
                                         "NewOpenPrice: " + newOpenPriceStr, "\n", 
                                         "NewStopLoss: " + newStopLossStr, "\n", 
                                         "NewTakeProfit: " + newTakeProfit);
             } else
             {
-                Trade.addLogEntry(true, "Altert: Order could not be modifed - check log for details.");
+                Trade.addLogEntry(1, "Altert: Order could not be modifed - check log for details.");
             }
 
             return result;
