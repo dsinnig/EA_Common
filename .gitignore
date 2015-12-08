@@ -3,3 +3,5 @@ Common.csproj
 Common.csproj.user
 bin/
 obj/
+Common.projitems
+Common.shproj

@@ -49,6 +49,7 @@ namespace biiuse
         //private const int OFFSET = (-7) * 60 * 60;
         private const int OFFSET = 0;
         private Order order;
+        protected int emailNotificationLevel; 
 
         public Order Order
         {
@@ -63,7 +64,7 @@ namespace biiuse
             }
         }
 
-        public Trade(string _strategyLabel, bool sim, int _lotDigits, string _logFileName, NQuotes.MqlApi mql4) : base(mql4)
+        public Trade(string _strategyLabel, bool sim, int _lotDigits, string _logFileName, int _emailNotificationLevel, NQuotes.MqlApi mql4) : base(mql4)
         {
             this.strategyLabel = _strategyLabel;
             this.logFileName = _logFileName;
@@ -94,6 +95,8 @@ namespace biiuse
             this.tradeClosedDate = new DateTime();
 
             this.finalState = false;
+
+            this.emailNotificationLevel = _emailNotificationLevel;
 
 
 
@@ -156,7 +159,7 @@ namespace biiuse
                 mql4.Print(mql4.TimeToStr(mql4.TimeCurrent(), MqlApi.TIME_DATE | MqlApi.TIME_SECONDS) + ": TradeID: " + this.id + " " + entry);
         }
 
-        public void addLogEntry(bool sendByEmail, params Object[] arg)
+        public void addLogEntry(int level, params Object[] arg)
         {
             if (arg.Length <= 0) return;
             string subject = strategyLabel + " " + mql4.Symbol() + "  " + mql4.TimeCurrent().ToString() + " Trade ID: " + this.id + " " + arg[0];
@@ -188,7 +191,12 @@ namespace biiuse
             this.log[logSize] = line;
             logSize++;
 
-            if ((sendByEmail) && (!mql4.IsTesting())) mql4.SendMail(subject, body);
+            if ((this.emailNotificationLevel >= level) && (!mql4.IsTesting()))
+            {
+                //Subject has a max length of 127 - trim required
+                subject = subject.Substring(0, Math.Min(subject.Length, 127));
+                mql4.SendMail(subject, body);
+            }
 
             if (!mql4.IsTesting())
             {
