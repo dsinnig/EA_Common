@@ -194,7 +194,7 @@ namespace biiuse
             if ((this.emailNotificationLevel >= level) && (!mql4.IsTesting()))
             {
                 //Subject has a max length of 127 - trim required
-                subject = subject.Substring(0, 127);
+                subject = subject.Substring(0, Math.Min(subject.Length, 127));
                 mql4.SendMail(subject, body);
             }
 
