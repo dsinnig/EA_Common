@@ -191,7 +191,12 @@ namespace biiuse
             this.log[logSize] = line;
             logSize++;
 
-            if ((this.emailNotificationLevel >= level) && (!mql4.IsTesting())) mql4.SendMail(subject, body);
+            if ((this.emailNotificationLevel >= level) && (!mql4.IsTesting()))
+            {
+                //Subject has a max length of 127 - trim required
+                subject = subject.Substring(0, 127);
+                mql4.SendMail(subject, body);
+            }
 
             if (!mql4.IsTesting())
             {
