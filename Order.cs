@@ -123,9 +123,11 @@ namespace biiuse
 
             ErrorType result = analzeAndProcessResult(Trade, mql4);
 
+            OrderTicket = ticket; 
+
             if (result == ErrorType.NO_ERROR)
             {
-                this.OrderTicket = ticket;
+                //this.OrderTicket = ticket;
                 this.entryPrice = entryPrice;
                 this.positionSize = positionSize;
                 this.stopLoss = stopLoss;
@@ -331,6 +333,11 @@ namespace biiuse
                     mql4.Alert("Not enough money to execute operation.");
                     trade.addLogEntry("Not enough money to execute operation. Abort trade", true);
                     return (ErrorType.NON_RETRIABLE_ERROR);
+                case 141:
+                    mql4.Alert("Too many order requests.");
+                    trade.addLogEntry("Too many order requests - Will try again at next tick", true);
+                    return (ErrorType.RETRIABLE_ERROR);
+
                 case 4108:
                     mql4.Alert("Order ticket was not found. Abort trade");
                     trade.addLogEntry("Order ticket was not found. Abort trade", true);
