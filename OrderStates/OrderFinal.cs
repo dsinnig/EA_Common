@@ -3,9 +3,9 @@ using NQuotes;
 
 namespace biiuse
 {
-    public class Final : OrderState
+    public class OrderFinal : OrderState
     {
-        public Final(Order context, MqlApi mql4) : base(context, mql4)
+        public OrderFinal(Order context, MqlApi mql4) : base(context, mql4)
         {
         }
 

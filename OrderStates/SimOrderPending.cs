@@ -7,9 +7,9 @@ using NQuotes;
 
 namespace biiuse
 {
-    class SIM_Pending : OrderState
+    class SimOrderPending : OrderState
     {
-        public SIM_Pending(SimOrder context, MqlApi mql4) : base(context, mql4)
+        public SimOrderPending(SimOrder context, MqlApi mql4) : base(context, mql4)
         {
             this.context = context;
         }
@@ -23,7 +23,7 @@ namespace biiuse
                 {
                     context.OpenPrice = mql4.Ask;
                     context.OrderType = OrderType.BUY;
-                    context.State = new SimFilled(context, mql4);
+                    context.State = new SimOrderFilled(context, mql4);
                 }
             }
 
@@ -32,7 +32,7 @@ namespace biiuse
                 {
                     context.OpenPrice = mql4.Ask;
                     context.OrderType = OrderType.BUY;
-                    context.State = new SimFilled(context, mql4);
+                    context.State = new SimOrderFilled(context, mql4);
                 }
             }
 
@@ -42,7 +42,7 @@ namespace biiuse
                 {
                     context.OpenPrice = mql4.Bid;
                     context.OrderType = OrderType.SELL;
-                    context.State = new SimFilled(context, mql4);
+                    context.State = new SimOrderFilled(context, mql4);
                 }
             }
 
@@ -52,7 +52,7 @@ namespace biiuse
                 {
                     context.OpenPrice = mql4.Ask;
                     context.OrderType = OrderType.SELL;
-                    context.State = new SimFilled(context, mql4);
+                    context.State = new SimOrderFilled(context, mql4);
                 }
             }
 

@@ -23,7 +23,7 @@ namespace biiuse
             State.update();
         }
 
-        public virtual ErrorType submitNewOrder(int mql4OrderType, double _entryPrice, double _stopLoss, double _takeProfit, double _cancelPrice, double _positionSize)
+        public virtual ErrorType submitNewOrder(int mql4OrderType, double _entryPrice, double _stopLoss, double _takeProfit, double _cancelPrice, double _positionSize, int _magicNumber)
         {
             if (this.orderType != OrderType.INIT)
             {
@@ -32,7 +32,7 @@ namespace biiuse
             }
 
             int maxSlippage = 4;
-            int magicNumber = 0;
+            int magicNumber = _magicNumber;
             System.DateTime expiration = new DateTime();
             System.Drawing.Color arrowColor = System.Drawing.Color.Red;
 
@@ -134,7 +134,7 @@ namespace biiuse
                 this.takeProfit = takeProfit;
                 this.cancelPrice = cancelPrice;
                 this.orderType = orderType;
-                this.state = new Pending(this, mql4);
+                this.state = new OrderPending(this, mql4);
                 Trade.addLogEntry(1, "Order successfully placed",
                                         "Order ticket: ", ticket, "\n",
                                         "Order type: ", orderTypeStr, "\n",
@@ -173,7 +173,7 @@ namespace biiuse
 
 
             //TODO include error handling here
-            this.state = new Final(this, mql4);
+            this.state = new OrderFinal(this, mql4);
             this.OrderType = OrderType.FINAL;
             return analzeAndProcessResult(Trade, mql4);
         }

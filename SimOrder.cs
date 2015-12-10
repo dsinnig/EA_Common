@@ -15,7 +15,7 @@ namespace biiuse
         }
 
         //placing fake order
-        public override ErrorType submitNewOrder(int mql4OrderType, double _entryPrice, double _stopLoss, double _takeProfit, double _cancelPrice, double _positionSize)
+        public override ErrorType submitNewOrder(int mql4OrderType, double _entryPrice, double _stopLoss, double _takeProfit, double _cancelPrice, double _positionSize, int _magicNumber)
         {
             if (this.OrderType != OrderType.INIT)
             {
@@ -113,7 +113,7 @@ namespace biiuse
             this.TakeProfit = takeProfit;
             this.CancelPrice = cancelPrice;
             this.OrderType = orderType;
-            this.State = new SIM_Pending(this, mql4);
+            this.State = new SimOrderPending(this, mql4);
 
             return ErrorType.NO_ERROR;
         }
@@ -129,7 +129,7 @@ namespace biiuse
 
 
             Trade.addLogEntry("Attemting to delete Sim Order (ticket number: " + this.OrderTicket + ")", true);
-            this.State = new Final(this, mql4);
+            this.State = new OrderFinal(this, mql4);
             this.OrderType = OrderType.FINAL;
             return analzeAndProcessResult(Trade, mql4);
         }

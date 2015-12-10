@@ -16,7 +16,5 @@ namespace biiuse
                     _date.Minute.ToString().PadLeft(2, '0') + ":" +
                     _date.Second.ToString().PadLeft(2, '0');
         }
-
-
     }
 }

@@ -49,7 +49,8 @@ namespace biiuse
         //private const int OFFSET = (-7) * 60 * 60;
         private const int OFFSET = 0;
         private Order order;
-        protected int emailNotificationLevel; 
+        protected int emailNotificationLevel;
+        private int rangeBufferInMicroPips;
 
         public Order Order
         {
@@ -64,7 +65,7 @@ namespace biiuse
             }
         }
 
-        public Trade(string _strategyLabel, bool sim, int _lotDigits, string _logFileName, int _emailNotificationLevel, NQuotes.MqlApi mql4) : base(mql4)
+        public Trade(string _strategyLabel, bool sim, int _lotDigits, string _logFileName, int _rangeBufferInMicroPips, int _emailNotificationLevel, NQuotes.MqlApi mql4) : base(mql4)
         {
             this.strategyLabel = _strategyLabel;
             this.logFileName = _logFileName;
@@ -97,6 +98,7 @@ namespace biiuse
             this.finalState = false;
 
             this.emailNotificationLevel = _emailNotificationLevel;
+            this.rangeBufferInMicroPips = _rangeBufferInMicroPips;
 
 
 
@@ -517,6 +519,11 @@ namespace biiuse
         public void setFinalStateFlag()
         {
             this.finalState = true;
+        }
+
+        public int getRangeBufferInMicroPips()
+        {
+            return rangeBufferInMicroPips;
         }
     }
 }

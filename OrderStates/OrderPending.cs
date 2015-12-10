@@ -3,9 +3,9 @@ using NQuotes;
 
 namespace biiuse
 {
-    internal class Pending : OrderState
+    internal class OrderPending : OrderState
     {
-        public Pending(Order context, MqlApi mql4) : base(context, mql4)
+        public OrderPending(Order context, MqlApi mql4) : base(context, mql4)
         {
         }
 
@@ -15,13 +15,13 @@ namespace biiuse
                 if (mql4.OrderType() == MqlApi.OP_BUY)
                 {
                     context.OrderType = OrderType.BUY;
-                    context.State = new Filled(context, mql4);
+                    context.State = new OrderFilled(context, mql4);
                 }
 
                 if (mql4.OrderType() == MqlApi.OP_SELL)
                 {
                     context.OrderType = OrderType.SELL;
-                    context.State = new Filled(context, mql4);
+                    context.State = new OrderFilled(context, mql4);
                 }
             }
 
