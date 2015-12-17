@@ -22,9 +22,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)SimOrder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Trade.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TradeStates\BuyLimitOrderOpened.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TradeStates\BuyStopOrderTrendTradePlaced.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TradeStates\LongProfitTargetReachedLookingToAdjustStopLoss.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TradeStates\SellLimitOrderOpened.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TradeStates\ShortProfitTargetReachedLookingToAdjustStopLoss.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TradeStates\SellStopOrderTrendTradePlaced.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TradeStates\StopBuyOrderOpened.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TradeStates\StopSellOrderOpened.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TradeStates\TradeClosed.cs" />
