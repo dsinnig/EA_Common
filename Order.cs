@@ -155,7 +155,7 @@ namespace biiuse
         {
             if ((orderType != OrderType.SELL_LIMIT) && (orderType != OrderType.SELL_STOP) && (orderType != OrderType.BUY_LIMIT) && (orderType == OrderType.SELL_STOP))
             {
-                Trade.addLogEntry("Filled orded cannot be delete, it must be closed", true);
+                Trade.addLogEntry("Filled order cannot be deleted, it must be closed", true);
                 return ErrorType.NON_RETRIABLE_ERROR;
             }
 
@@ -179,6 +179,47 @@ namespace biiuse
         }
 
         //TODO add OrderClose method
+
+
+        public virtual ErrorType closeOrder()
+        {
+            if ((orderType != OrderType.SELL) && (orderType != OrderType.BUY))
+            {
+                Trade.addLogEntry("Pending order cannot be closed, it must be deleted", true);
+                return ErrorType.NON_RETRIABLE_ERROR;
+            }
+
+
+            Trade.addLogEntry("Attemting to close Order (ticket number: " + mql4.IntegerToString(OrderTicket) + ")", true);
+            mql4.ResetLastError();
+            bool success = false;
+            
+            if (this.orderType == OrderType.BUY)
+            {
+                success = mql4.OrderClose(OrderTicket, positionSize, mql4.Bid, 2);
+            }
+
+            if (this.orderType == OrderType.SELL)
+            {
+                success = mql4.OrderClose(OrderTicket, positionSize, mql4.Ask, 2);
+            }
+            if (success)
+            {
+                Trade.addLogEntry(1, "Order (" + OrderTicket + ") successfully closed");
+            }
+            else
+            {
+                Trade.addLogEntry(1, "Alert!: Order (" + OrderTicket + ") could not closed - check log for details");
+            }
+
+
+            //TODO include error handling here
+            this.state = new OrderFinal(this, mql4);
+            this.OrderType = OrderType.FINAL;
+            return analzeAndProcessResult(Trade, mql4);
+
+
+        }
 
         public virtual ErrorType modifyOrder(double newOpenPrice, double newStopLoss, double newTakeProfit)
         {
